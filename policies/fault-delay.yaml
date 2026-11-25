@@ -1,0 +1,18 @@
+apiVersion: kuma.io/v1alpha1
+kind: MeshFaultInjection
+metadata:
+  name: ratings-fault
+  namespace: bookinfo
+  labels:
+    kuma.io/mesh: default
+spec:
+  targetRef:
+    kind: Dataplane
+    labels:
+      app: ratings
+  rules:
+    - default:
+        http:
+          - delay:
+              value: 2s
+              percentage: 100

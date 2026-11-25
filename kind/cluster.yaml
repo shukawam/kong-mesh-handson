@@ -1,0 +1,25 @@
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: kong-mesh
+nodes:
+  - role: control-plane
+    kubeadmConfigPatches:
+      - |
+        kind: InitConfiguration
+        nodeRegistration:
+          kubeletExtraArgs:
+            node-labels: "ingress-ready=true"
+    # ホストからブラウザ/curl で直接叩くための NodePort 公開。
+    # 30681: Kong Mesh GUI/API (Service を NodePort 化して使う), 30080/30443: デモアプリ/ゲートウェイ用
+    extraPortMappings:
+      - containerPort: 30681
+        hostPort: 5681
+        protocol: TCP
+      - containerPort: 30080
+        hostPort: 8080
+        protocol: TCP
+      - containerPort: 30443
+        hostPort: 8443
+        protocol: TCP
+  - role: worker
+  - role: worker

@@ -1,0 +1,15 @@
+apiVersion: kuma.io/v1alpha1
+kind: MeshTimeout
+metadata:
+  name: ratings-timeout
+  namespace: bookinfo
+  labels:
+    kuma.io/mesh: default
+spec:
+  to:
+    - targetRef:
+        kind: MeshService
+        name: ratings
+      default:
+        http:
+          requestTimeout: 500ms

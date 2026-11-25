@@ -1,0 +1,17 @@
+apiVersion: kuma.io/v1alpha1
+kind: MeshRetry
+metadata:
+  name: ratings-retry
+  namespace: bookinfo
+  labels:
+    kuma.io/mesh: default
+spec:
+  to:
+    - targetRef:
+        kind: MeshService
+        name: ratings
+      default:
+        http:
+          numRetries: 3
+          retryOn:
+            - 5xx

@@ -1,0 +1,7 @@
+kuma:
+  controlPlane:
+    mode: zone
+    secrets:
+      - Env: KUMA_MULTIZONE_ZONE_KDS_AUTH_TOKEN_INLINE
+        Secret: cp-token
+        Key: token
